@@ -20,6 +20,6 @@ public interface IHospitalInterface {
     @Operation(method = "createConsult", summary = "Registers new consults that happen in the hospital")
     @PostMapping("/createConsult")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<PatientDto> createConsult(@RequestBody @NotNull ConsultDto consult);
+    ResponseEntity<ConsultDto> createConsult(@RequestBody @NotNull ConsultDto consult);
 
 }

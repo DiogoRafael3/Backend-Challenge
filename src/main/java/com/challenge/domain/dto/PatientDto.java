@@ -13,5 +13,5 @@ public class PatientDto {
     private String patientId;
     private short age;
     private List<ConsultDto> consultDtos;
-    private List<PathologyDto> pathologies;
+    private List<PathologyDto> pathologyDtos;
 }
