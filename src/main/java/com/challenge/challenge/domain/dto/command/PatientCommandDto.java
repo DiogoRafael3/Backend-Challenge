@@ -12,5 +12,5 @@ import java.util.List;
 public class PatientCommandDto {
     private String name;
     private short age;
-    private List<PathologyCommandDto> pathologies;
+    private PathologyCommandDto pathology;
 }

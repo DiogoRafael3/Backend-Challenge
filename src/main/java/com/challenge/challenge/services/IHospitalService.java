@@ -1,8 +1,9 @@
 package com.challenge.challenge.services;
 
 import com.challenge.challenge.domain.Consult;
+import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 
 public interface IHospitalService {
 
-    Consult createConsult(Consult consult);
+    Consult createConsult(ConsultCommandDto consult);
 }
