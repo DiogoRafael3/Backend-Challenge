@@ -1,4 +1,4 @@
-package com.challenge.domain.domain.utils;
+package com.challenge.domain.utils;
 
 public enum SpecialtyName {
     DERMATOLOGY,
