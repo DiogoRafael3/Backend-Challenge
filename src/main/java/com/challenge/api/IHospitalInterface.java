@@ -2,6 +2,7 @@ package com.challenge.api;
 
 import com.challenge.domain.dto.ConsultDto;
 import com.challenge.domain.dto.PatientDto;
+import com.challenge.domain.dto.command.ConsultCommandDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,6 @@ public interface IHospitalInterface {
     @Operation(method = "createConsult", summary = "Registers new consults that happen in the hospital")
     @PostMapping("/createConsult")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<ConsultDto> createConsult(@RequestBody @NotNull ConsultDto consult);
+    ResponseEntity<ConsultDto> createConsult(@RequestBody @NotNull ConsultCommandDto consultCommandDto);
 
 }

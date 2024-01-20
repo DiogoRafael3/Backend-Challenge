@@ -1,4 +1,4 @@
-package com.challenge.domain;
+package com.challenge.domain.dto.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Specialty {
-    private Long specialtyId;
+public class SpecialtyCommandDto {
     private String specialtyName;
-    private Doctor doctor;
+    private DoctorCommandDto doctorCommandDto;
 }

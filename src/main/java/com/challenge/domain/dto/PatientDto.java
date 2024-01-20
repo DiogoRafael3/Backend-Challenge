@@ -10,7 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PatientDto {
-    private String patientId;
+    private Long patientId;
+    private String name;
     private short age;
     private List<ConsultDto> consultDtos;
     private List<PathologyDto> pathologyDtos;

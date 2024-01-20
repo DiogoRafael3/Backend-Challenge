@@ -1,15 +1,14 @@
 package com.challenge.mappers;
 
 import com.challenge.domain.Consult;
-import com.challenge.orm.models.ConsultEntity;
+import com.challenge.domain.dto.ConsultDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface HospitalEntityMapper {
+public interface HospitalDtoMapper {
 
-    Consult toConsult(ConsultEntity consultDto);
+    Consult toConsult(ConsultDto consultDto);
 
-    ConsultEntity toConsultEntity(Consult consult);
-
+    ConsultDto toConsultDto(Consult consultDto);
 }

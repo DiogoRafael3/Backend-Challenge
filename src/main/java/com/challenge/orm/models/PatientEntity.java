@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,7 +20,10 @@ import java.util.List;
 @AllArgsConstructor
 public class PatientEntity {
     @Id
-    private String patientId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long patientId;
+    @Column
+    private String name;
     @Column
     private short age;
     @OneToMany

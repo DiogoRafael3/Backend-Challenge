@@ -1,4 +1,4 @@
-package com.challenge.domain;
+package com.challenge.domain.dto.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Patient {
-    private Long patientId;
+public class PatientCommandDto {
     private String name;
     private short age;
-    private List<Consult> consults;
-    private List<Pathology> pathologies;
+    private List<ConsultCommandDto> consultCommandDtos;
+    private List<PathologyCommandDto> pathologyCommandDtos;
 }

@@ -10,7 +10,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class Consult {
-    private int consultId;
+    private Long consultId;
     private Doctor doctor;
     private Specialty specialty;
     private Patient patient;
