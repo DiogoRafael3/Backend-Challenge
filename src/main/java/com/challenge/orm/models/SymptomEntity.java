@@ -1,4 +1,8 @@
-package com.challenge.orm;
+package com.challenge.orm.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SYMPTOM")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SymptomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
