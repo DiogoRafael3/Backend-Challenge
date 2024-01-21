@@ -13,6 +13,4 @@ public class Patient {
     private Long patientId;
     private String name;
     private short age;
-    private List<Consult> consults;
-    private List<Pathology> pathologies;
 }

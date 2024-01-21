@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class SymptomEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long symptomId;
+    private Long id;
     @Column
     private String description;
 }

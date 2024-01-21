@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class ConsultEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long consultId;
+    private Long id;
     @OneToOne
     private DoctorEntity doctor;
     @OneToOne

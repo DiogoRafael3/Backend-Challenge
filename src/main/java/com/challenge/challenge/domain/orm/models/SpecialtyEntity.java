@@ -20,9 +20,7 @@ import javax.persistence.Table;
 public class SpecialtyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long specialtyId;
+    private Long id;
     @Column
     private String specialtyName;
-    @OneToOne
-    private DoctorEntity doctor;
 }

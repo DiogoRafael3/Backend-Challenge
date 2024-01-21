@@ -4,6 +4,7 @@ import com.challenge.challenge.domain.Consult;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.dto.command.PathologyCommandDto;
 import com.challenge.challenge.domain.dto.command.PatientCommandDto;
+import com.challenge.challenge.domain.dto.command.SymptomCommandDto;
 import com.challenge.challenge.domain.orm.models.ConsultEntity;
 import com.challenge.challenge.domain.orm.models.DoctorEntity;
 import com.challenge.challenge.domain.orm.models.PathologyEntity;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -55,31 +57,47 @@ public class ConsultService implements IHospitalService {
 
     @Override
     public Consult createConsult(ConsultCommandDto consult) {
-        verifyEntitiesExists(consult);
 
-        PatientCommandDto patientCommand = consult.getPatient();
-        PathologyCommandDto pathologyCommand = patientCommand.getPathology();
+        DoctorEntity doctor = doctorRepository.findByName(consult.getDoctor())
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+        SpecialtyEntity specialty = specialtyRepository.findBySpecialtyName(consult.getSpecialty())
+                .orElseThrow(() -> new RuntimeException("Specialty not found"));
 
-        DoctorEntity doctor = new DoctorEntity(null, consult.getDoctor());
-        SpecialtyEntity specialty = new SpecialtyEntity(null, consult.getSpecialty(), doctor);
-        PatientEntity patient = new PatientEntity(null, patientCommand.getName(), patientCommand.getAge(), null, null);
+        PatientEntity patient = createPatient(consult.getPatient());
+
         ConsultEntity savedEntity = consultRepository.save(generateConsult(consult, doctor, specialty, patient));
 
-        createPathology(patient, pathologyCommand);
-        createSymptoms(pathologyCommand);
 
         return entityMapper.toConsult(savedEntity);
     }
 
-    private void createSymptoms(PathologyCommandDto pathologyCommand) {
-        List<SymptomEntity> symptoms = entityMapper.toSymptomEntityList(pathologyCommand.getSymptoms());
-        symptomRepository.saveAll(symptoms);
+
+    private PatientEntity createPatient(PatientCommandDto patient) {
+        PatientEntity patientEntity = patientRepository.findByNameAndAge(patient.getName(), patient.getAge())
+                .orElseGet(() -> patientRepository.save(new PatientEntity(null, patient.getName(), patient.getAge())));
+
+        createPathology(patient.getPathology(), patientEntity);
+
+        return patientEntity;
     }
 
-    private void createPathology(PatientEntity patient, PathologyCommandDto pathologyCommand) {
-        PathologyEntity pathology = entityMapper.toPathologyEntity(pathologyCommand);
-        pathology.setPatient(patient);
+    private void createPathology(PathologyCommandDto pathologyCommandDto, PatientEntity entity) {
+        PathologyEntity pathology = new PathologyEntity();
+
+        List<SymptomEntity> symptoms = pathologyCommandDto.getSymptoms().stream()
+                .map(this::createSymptom)
+                .collect(Collectors.toList());
+
+        pathology.setPatient(entity);
+        pathology.setSymptoms(symptoms);
+
         pathologyRepository.save(pathology);
+    }
+
+    private SymptomEntity createSymptom(SymptomCommandDto symptomCommandDto) {
+        SymptomEntity symptom = new SymptomEntity();
+        symptom.setDescription(symptomCommandDto.getDescription());
+        return symptomRepository.save(symptom);
     }
 
     private ConsultEntity generateConsult(ConsultCommandDto consult, DoctorEntity doctor, SpecialtyEntity specialty, PatientEntity patient) {
@@ -88,15 +106,5 @@ public class ConsultService implements IHospitalService {
         consultEntity.setSpecialty(specialty);
         consultEntity.setPatient(patient);
         return consultEntity;
-    }
-
-    private void verifyEntitiesExists(ConsultCommandDto consult) {
-        PatientCommandDto patient = consult.getPatient();
-        doctorRepository.findByName(consult.getDoctor())
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
-        specialtyRepository.findBySpecialtyName(consult.getSpecialty())
-                .orElseThrow(() -> new RuntimeException("Specialty not found"));
-        patientRepository.findByNameAndAge(patient.getName(), patient.getAge())
-                .orElseThrow(() -> new RuntimeException("Patient not found"));
     }
 }

@@ -11,6 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PathologyDto {
     private Long pathologyId;
-    private PatientDto patientDto;
     private List<SymptomDto> symptomDtos;
 }

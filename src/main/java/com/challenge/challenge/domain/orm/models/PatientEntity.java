@@ -11,23 +11,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.List;
 
 @Entity
-@Table(name = "PATIENT")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(
+        name = "PATIENT",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "age"})
+)
 public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long patientId;
+    private Long id;
     @Column
     private String name;
     @Column
     private short age;
-    @OneToMany
-    private List<ConsultEntity> consults;
-    @OneToMany
-    private List<PathologyEntity> pathologies;
 }

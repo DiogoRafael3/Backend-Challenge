@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class Doctor {
     private Long doctorId;
     private String name;
+    private Specialty specialty;
 }

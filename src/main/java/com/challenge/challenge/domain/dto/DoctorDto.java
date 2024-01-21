@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class DoctorDto {
     private Long doctorId;
     private String name;
+    private SpecialtyDto specialtyDto;
 }

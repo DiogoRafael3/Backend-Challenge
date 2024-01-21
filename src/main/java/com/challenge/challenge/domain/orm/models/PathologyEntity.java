@@ -22,7 +22,7 @@ import java.util.List;
 public class PathologyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pathologyId;
+    private Long id;
     @ManyToOne
     private PatientEntity patient;
     @OneToMany

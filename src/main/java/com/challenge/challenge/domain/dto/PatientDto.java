@@ -13,6 +13,4 @@ public class PatientDto {
     private Long patientId;
     private String name;
     private short age;
-    private List<ConsultDto> consultDtos;
-    private List<PathologyDto> pathologyDtos;
 }
