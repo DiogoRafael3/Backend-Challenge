@@ -1,7 +1,6 @@
 package com.challenge.challenge.domain.orm.repository;
 
 import com.challenge.challenge.domain.orm.models.ConsultEntity;
-import com.challenge.challenge.domain.orm.models.SpecialtyEntity;
 import com.challenge.challenge.domain.response.TopSpecialtyResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
