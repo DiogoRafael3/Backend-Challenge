@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Patient {
-    private Long patientId;
+    private Long id;
     private String name;
     private short age;
 }

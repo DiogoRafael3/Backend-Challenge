@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pathology {
-    private Long pathologyId;
+    private Long id;
     private Patient patient;
     private List<Symptom> symptoms;
 }

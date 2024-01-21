@@ -1,9 +1,9 @@
 package com.challenge.challenge.controllers;
 
 import com.challenge.challenge.api.IHospitalInterface;
-import com.challenge.challenge.domain.dto.ResponseDto;
+import com.challenge.challenge.domain.response.Response;
+import com.challenge.challenge.domain.response.dto.ResponseDto;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
-import com.challenge.challenge.mappers.HospitalCommandDtoMapper;
 import com.challenge.challenge.mappers.HospitalDtoMapper;
 import com.challenge.challenge.services.IHospitalService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,19 +28,22 @@ public class HospitalController implements IHospitalInterface {
     HospitalDtoMapper hospitalDtoMapper;
 
     @Autowired
-    public HospitalController(IHospitalService hospitalService, HospitalDtoMapper hospitalDtoMapper, HospitalCommandDtoMapper hospitalCommandDtoMapper) {
+    public HospitalController(IHospitalService hospitalService, HospitalDtoMapper hospitalDtoMapper) {
         this.hospitalService = hospitalService;
         this.hospitalDtoMapper = hospitalDtoMapper;
     }
 
     @PostMapping("/createConsult")
     public ResponseEntity<String> createConsult(@RequestBody ConsultCommandDto consultCommandDto) {
+        //TODO: Should return consult
+        //TODO: should map commanddto to command first
         hospitalService.createConsult(consultCommandDto);
         return new ResponseEntity<>("Consult was created succesfully!", HttpStatus.CREATED);
     }
 
     @GetMapping("/consultsAndSymptoms/{patientId}")
-    public ResponseEntity<ResponseDto> getPatientConsultAndSymptoms(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<ResponseDto> getPatientConsultAndSymptoms(@PathVariable Long patientId) {
+        Response response = hospitalService.getPatientConsultsAndSymptoms(patientId);
+        return ResponseEntity.ok(hospitalDtoMapper.toResponseDto(response));
     }
 }

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Specialty {
-    private Long specialtyId;
+    private Long id;
     private String specialtyName;
 }

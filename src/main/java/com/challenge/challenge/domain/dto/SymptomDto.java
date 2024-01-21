@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SymptomDto {
-    private Long symptomId;
+    private Long id;
     private String description;
 }

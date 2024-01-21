@@ -1,6 +1,10 @@
 package com.challenge.challenge.mappers;
 
 import com.challenge.challenge.domain.Consult;
+import com.challenge.challenge.domain.Doctor;
+import com.challenge.challenge.domain.Pathology;
+import com.challenge.challenge.domain.Specialty;
+import com.challenge.challenge.domain.Symptom;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.dto.command.PathologyCommandDto;
 import com.challenge.challenge.domain.dto.command.PatientCommandDto;
@@ -11,6 +15,7 @@ import com.challenge.challenge.domain.orm.models.PathologyEntity;
 import com.challenge.challenge.domain.orm.models.PatientEntity;
 import com.challenge.challenge.domain.orm.models.SpecialtyEntity;
 import com.challenge.challenge.domain.orm.models.SymptomEntity;
+import com.challenge.challenge.domain.response.ConsultResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -26,15 +31,15 @@ public interface HospitalEntityMapper {
     @Mapping(target = "doctor", source = "doctor", qualifiedByName = "stringToDoctor")
     @Mapping(target = "specialty", source = "specialty", qualifiedByName = "stringToSpecialty")
     ConsultEntity toConsultEntity(ConsultCommandDto consult);
-    PatientEntity toPatientEntity(PatientCommandDto patientCommandDto);
 
-    PathologyEntity toPathologyEntity(PathologyCommandDto pathologyCommandDto);
+    List<ConsultResponse> toConsultResponseList(List<ConsultEntity> consultEntityList);
 
-    List<SymptomEntity> toSymptomEntityList(List<SymptomCommandDto> symptomCommandDtoList);
+    List<Symptom> toSymptomList(List<SymptomEntity> symptomEntityList);
 
     @Named("stringToDoctor")
     DoctorEntity stringToDoctor(String name);
 
     @Named("stringToSpecialty")
     SpecialtyEntity stringToSpecialty(String specialty);
+
 }
