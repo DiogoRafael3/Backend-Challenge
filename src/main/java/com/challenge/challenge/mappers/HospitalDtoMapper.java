@@ -4,8 +4,10 @@ import com.challenge.challenge.domain.Consult;
 import com.challenge.challenge.domain.dto.ConsultDto;
 import com.challenge.challenge.domain.response.ConsultResponse;
 import com.challenge.challenge.domain.response.Response;
+import com.challenge.challenge.domain.response.TopSpecialtyResponse;
 import com.challenge.challenge.domain.response.dto.ConsultResponseDto;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
+import com.challenge.challenge.domain.response.dto.TopSpecialtyResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -25,5 +27,5 @@ public interface HospitalDtoMapper {
     List<ConsultResponseDto> toConsultResponseDto(List<ConsultResponse> consultResponses);
 
 
-
+    List<TopSpecialtyResponseDto> toTopSpecialtiesDto(List<TopSpecialtyResponse> topSpecialtyResponses);
 }

@@ -1,6 +1,7 @@
 package com.challenge.challenge.services;
 
 import com.challenge.challenge.domain.Consult;
+import com.challenge.challenge.domain.Specialty;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.dto.command.PathologyCommandDto;
 import com.challenge.challenge.domain.dto.command.PatientCommandDto;
@@ -18,12 +19,18 @@ import com.challenge.challenge.domain.orm.repository.PatientRepository;
 import com.challenge.challenge.domain.orm.repository.SpecialtyRepository;
 import com.challenge.challenge.domain.orm.repository.SymptomRepository;
 import com.challenge.challenge.domain.response.Response;
+import com.challenge.challenge.domain.response.TopSpecialtyResponse;
 import com.challenge.challenge.mappers.HospitalEntityMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,13 +39,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ConsultService implements IHospitalService {
 
-    HospitalEntityMapper entityMapper;
-    ConsultRepository consultRepository;
-    DoctorRepository doctorRepository;
-    SpecialtyRepository specialtyRepository;
-    PatientRepository patientRepository;
-    PathologyRepository pathologyRepository;
-    SymptomRepository symptomRepository;
+    private final HospitalEntityMapper entityMapper;
+    private final ConsultRepository consultRepository;
+    private final DoctorRepository doctorRepository;
+    private final SpecialtyRepository specialtyRepository;
+    private final PatientRepository patientRepository;
+    private final PathologyRepository pathologyRepository;
+    private final SymptomRepository symptomRepository;
+
+    @PersistenceContext
+    private final EntityManager entityManager;
 
     @Override
     public Consult createConsult(ConsultCommandDto consult) {
@@ -69,6 +79,12 @@ public class ConsultService implements IHospitalService {
         response.setSymptoms(entityMapper.toSymptomList(patientSymptoms));
 
         return response;
+    }
+
+    @Override
+    public List<TopSpecialtyResponse> getTopSpecialties() {
+        return consultRepository.findSpecialtiesWithMoreThanConsults(2L)
+                .orElseGet(Collections::emptyList);
     }
 
     private void addSymptomsFromPathologies(Long patientId, List<SymptomEntity> patientSymptoms) {

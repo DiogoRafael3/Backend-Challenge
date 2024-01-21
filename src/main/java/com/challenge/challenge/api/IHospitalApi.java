@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RequestMapping(path = "/hospitalApi")
 @Tag(name = "hospital")
@@ -28,5 +29,5 @@ public interface IHospitalApi {
 
     @Operation(method = "topSpecialties", summary = "Lists which specialties have more than 2 patientes.")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<TopSpecialtyResponseDto> getTopSpecialties();
+    ResponseEntity<List<TopSpecialtyResponseDto>> getTopSpecialties();
 }

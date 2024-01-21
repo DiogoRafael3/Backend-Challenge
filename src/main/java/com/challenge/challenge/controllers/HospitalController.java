@@ -3,6 +3,7 @@ package com.challenge.challenge.controllers;
 import com.challenge.challenge.api.IHospitalApi;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.response.Response;
+import com.challenge.challenge.domain.response.TopSpecialtyResponse;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
 import com.challenge.challenge.domain.response.dto.TopSpecialtyResponseDto;
 import com.challenge.challenge.mappers.HospitalDtoMapper;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Component
 @RestController
 @RequestMapping("/api/hospital")
@@ -26,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class HospitalController implements IHospitalApi {
 
-    IHospitalService hospitalService;
-    HospitalDtoMapper hospitalDtoMapper;
+    private final IHospitalService hospitalService;
+    private final HospitalDtoMapper hospitalDtoMapper;
 
     @PostMapping("/createConsult")
     public ResponseEntity<String> createConsult(@RequestBody ConsultCommandDto consultCommandDto) {
@@ -43,8 +46,9 @@ public class HospitalController implements IHospitalApi {
         return ResponseEntity.ok(hospitalDtoMapper.toResponseDto(response));
     }
 
-    @Override
-    public ResponseEntity<TopSpecialtyResponseDto> getTopSpecialties() {
-        return null;
+    @GetMapping("/topSpecialties")
+    public ResponseEntity<List<TopSpecialtyResponseDto>> getTopSpecialties() {
+        List<TopSpecialtyResponse> topSpecialties = hospitalService.getTopSpecialties();
+        return ResponseEntity.ok(hospitalDtoMapper.toTopSpecialtiesDto(topSpecialties));
     }
 }
