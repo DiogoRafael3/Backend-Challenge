@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 
 @RequestMapping(path = "/hospitalApi")
 @Tag(name = "hospital")
-public interface IHospitalInterface {
+public interface IHospitalApi {
 
     @Operation(method = "createConsult", summary = "Registers new consults that happen in the hospital")
     @ResponseStatus(HttpStatus.CREATED)

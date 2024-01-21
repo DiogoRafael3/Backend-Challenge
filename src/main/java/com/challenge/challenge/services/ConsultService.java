@@ -19,8 +19,8 @@ import com.challenge.challenge.domain.orm.repository.SpecialtyRepository;
 import com.challenge.challenge.domain.orm.repository.SymptomRepository;
 import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.mappers.HospitalEntityMapper;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@AllArgsConstructor
 public class ConsultService implements IHospitalService {
 
     HospitalEntityMapper entityMapper;
@@ -38,24 +39,6 @@ public class ConsultService implements IHospitalService {
     PatientRepository patientRepository;
     PathologyRepository pathologyRepository;
     SymptomRepository symptomRepository;
-
-
-    @Autowired
-    public ConsultService(HospitalEntityMapper entityMapper,
-                          ConsultRepository consultRepository,
-                          DoctorRepository doctorRepository,
-                          SpecialtyRepository specialtyRepository,
-                          PatientRepository patientRepository,
-                          PathologyRepository pathologyRepository,
-                          SymptomRepository symptomRepository) {
-        this.entityMapper = entityMapper;
-        this.consultRepository = consultRepository;
-        this.doctorRepository = doctorRepository;
-        this.specialtyRepository = specialtyRepository;
-        this.patientRepository = patientRepository;
-        this.pathologyRepository = pathologyRepository;
-        this.symptomRepository = symptomRepository;
-    }
 
     @Override
     public Consult createConsult(ConsultCommandDto consult) {
