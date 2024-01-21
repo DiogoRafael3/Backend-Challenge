@@ -1,8 +1,6 @@
 package com.challenge.challenge.services;
 
 import com.challenge.challenge.domain.Consult;
-import com.challenge.challenge.domain.Pathology;
-import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.dto.command.PathologyCommandDto;
 import com.challenge.challenge.domain.dto.command.PatientCommandDto;
@@ -19,15 +17,14 @@ import com.challenge.challenge.domain.orm.repository.PathologyRepository;
 import com.challenge.challenge.domain.orm.repository.PatientRepository;
 import com.challenge.challenge.domain.orm.repository.SpecialtyRepository;
 import com.challenge.challenge.domain.orm.repository.SymptomRepository;
+import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.mappers.HospitalEntityMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

@@ -1,9 +1,9 @@
 package com.challenge.challenge.controllers;
 
 import com.challenge.challenge.api.IHospitalInterface;
+import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
-import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.mappers.HospitalDtoMapper;
 import com.challenge.challenge.services.IHospitalService;
 import lombok.extern.slf4j.Slf4j;

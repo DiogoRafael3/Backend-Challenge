@@ -1,7 +1,7 @@
 package com.challenge.challenge.api;
 
-import com.challenge.challenge.domain.response.dto.ResponseDto;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
+import com.challenge.challenge.domain.response.dto.ResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;

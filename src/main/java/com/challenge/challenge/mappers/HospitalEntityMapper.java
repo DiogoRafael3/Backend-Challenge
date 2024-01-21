@@ -1,18 +1,10 @@
 package com.challenge.challenge.mappers;
 
 import com.challenge.challenge.domain.Consult;
-import com.challenge.challenge.domain.Doctor;
-import com.challenge.challenge.domain.Pathology;
-import com.challenge.challenge.domain.Specialty;
 import com.challenge.challenge.domain.Symptom;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
-import com.challenge.challenge.domain.dto.command.PathologyCommandDto;
-import com.challenge.challenge.domain.dto.command.PatientCommandDto;
-import com.challenge.challenge.domain.dto.command.SymptomCommandDto;
 import com.challenge.challenge.domain.orm.models.ConsultEntity;
 import com.challenge.challenge.domain.orm.models.DoctorEntity;
-import com.challenge.challenge.domain.orm.models.PathologyEntity;
-import com.challenge.challenge.domain.orm.models.PatientEntity;
 import com.challenge.challenge.domain.orm.models.SpecialtyEntity;
 import com.challenge.challenge.domain.orm.models.SymptomEntity;
 import com.challenge.challenge.domain.response.ConsultResponse;
