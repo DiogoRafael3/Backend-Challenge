@@ -2,6 +2,7 @@ package com.challenge.challenge.api;
 
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
+import com.challenge.challenge.domain.response.dto.TopSpecialtyResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,9 @@ public interface IHospitalInterface {
 
     @Operation(method = "consultsAndSymptoms", summary = "For a specific patient, return a list of all the consults that the patient has had and also all the symptoms he has presented in each consult.")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ResponseDto> getPatientConsultAndSymptoms(@PathVariable Long patientId);
+    ResponseEntity<ResponseDto> getPatientConsultAndSymptoms(@PathVariable Long patientId);
 
+    @Operation(method = "topSpecialties", summary = "Lists which specialties have more than 2 patientes.")
+    @ResponseStatus(HttpStatus.OK)
+    ResponseEntity<TopSpecialtyResponseDto> getTopSpecialties();
 }

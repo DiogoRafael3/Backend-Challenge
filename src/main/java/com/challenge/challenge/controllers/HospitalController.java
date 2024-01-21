@@ -4,6 +4,7 @@ import com.challenge.challenge.api.IHospitalInterface;
 import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
 import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
+import com.challenge.challenge.domain.response.dto.TopSpecialtyResponseDto;
 import com.challenge.challenge.mappers.HospitalDtoMapper;
 import com.challenge.challenge.services.IHospitalService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,5 +46,10 @@ public class HospitalController implements IHospitalInterface {
     public ResponseEntity<ResponseDto> getPatientConsultAndSymptoms(@PathVariable Long patientId) {
         Response response = hospitalService.getPatientConsultsAndSymptoms(patientId);
         return ResponseEntity.ok(hospitalDtoMapper.toResponseDto(response));
+    }
+
+    @Override
+    public ResponseEntity<TopSpecialtyResponseDto> getTopSpecialties() {
+        return null;
     }
 }
