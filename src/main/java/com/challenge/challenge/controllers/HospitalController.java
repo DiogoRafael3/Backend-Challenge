@@ -1,7 +1,10 @@
 package com.challenge.challenge.controllers;
 
 import com.challenge.challenge.api.IHospitalApi;
-import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
+import com.challenge.challenge.domain.Patient;
+import com.challenge.challenge.domain.dto.PatientDto;
+import com.challenge.challenge.domain.dto.request.PatientFilters;
+import com.challenge.challenge.domain.dto.request.command.ConsultCommandDto;
 import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.domain.response.TopSpecialtyResponse;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
@@ -50,5 +53,11 @@ public class HospitalController implements IHospitalApi {
     public ResponseEntity<List<TopSpecialtyResponseDto>> getTopSpecialties() {
         List<TopSpecialtyResponse> topSpecialties = hospitalService.getTopSpecialties();
         return ResponseEntity.ok(hospitalDtoMapper.toTopSpecialtiesDto(topSpecialties));
+    }
+
+    @GetMapping("/getAllPatients")
+    public ResponseEntity<List<PatientDto>> getAllPatients(PatientFilters filters) {
+        List<Patient> filteredPatients = hospitalService.getAllPatients(filters);
+        return null;
     }
 }

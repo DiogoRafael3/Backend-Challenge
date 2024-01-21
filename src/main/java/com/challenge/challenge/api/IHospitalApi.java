@@ -1,6 +1,8 @@
 package com.challenge.challenge.api;
 
-import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
+import com.challenge.challenge.domain.dto.PatientDto;
+import com.challenge.challenge.domain.dto.request.PatientFilters;
+import com.challenge.challenge.domain.dto.request.command.ConsultCommandDto;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
 import com.challenge.challenge.domain.response.dto.TopSpecialtyResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,11 +25,16 @@ public interface IHospitalApi {
     @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<String> createConsult(@RequestBody @NotNull ConsultCommandDto consultCommandDto);
 
-    @Operation(method = "consultsAndSymptoms", summary = "For a specific patient, return a list of all the consults that the patient has had and also all the symptoms he has presented in each consult.")
+    @Operation(method = "getConsultsAndSymptoms", summary = "For a specific patient, return a list of all the consults that the patient has had and also all the symptoms he has presented in each consult.")
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity<ResponseDto> getPatientConsultAndSymptoms(@PathVariable Long patientId);
 
-    @Operation(method = "topSpecialties", summary = "Lists which specialties have more than 2 patientes.")
+    @Operation(method = "getTopSpecialties", summary = "Lists which specialties have more than 2 patientes.")
     @ResponseStatus(HttpStatus.OK)
     ResponseEntity<List<TopSpecialtyResponseDto>> getTopSpecialties();
+
+    @Operation(method = "getAllPatients", summary = "return the data for all the patients with pagination, filtering and sorting by either age or name.")
+    @ResponseStatus(HttpStatus.OK)
+    ResponseEntity<List<PatientDto>> getAllPatients(@RequestBody PatientFilters filters);
+
 }

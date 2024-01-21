@@ -2,7 +2,7 @@ package com.challenge.challenge.mappers;
 
 import com.challenge.challenge.domain.Consult;
 import com.challenge.challenge.domain.Symptom;
-import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
+import com.challenge.challenge.domain.dto.request.command.ConsultCommandDto;
 import com.challenge.challenge.domain.orm.models.ConsultEntity;
 import com.challenge.challenge.domain.orm.models.DoctorEntity;
 import com.challenge.challenge.domain.orm.models.SpecialtyEntity;

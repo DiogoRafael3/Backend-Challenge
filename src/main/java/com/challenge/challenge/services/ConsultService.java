@@ -1,11 +1,12 @@
 package com.challenge.challenge.services;
 
 import com.challenge.challenge.domain.Consult;
-import com.challenge.challenge.domain.Specialty;
-import com.challenge.challenge.domain.dto.command.ConsultCommandDto;
-import com.challenge.challenge.domain.dto.command.PathologyCommandDto;
-import com.challenge.challenge.domain.dto.command.PatientCommandDto;
-import com.challenge.challenge.domain.dto.command.SymptomCommandDto;
+import com.challenge.challenge.domain.Patient;
+import com.challenge.challenge.domain.dto.request.PatientFilters;
+import com.challenge.challenge.domain.dto.request.command.ConsultCommandDto;
+import com.challenge.challenge.domain.dto.request.command.PathologyCommandDto;
+import com.challenge.challenge.domain.dto.request.command.PatientCommandDto;
+import com.challenge.challenge.domain.dto.request.command.SymptomCommandDto;
 import com.challenge.challenge.domain.orm.models.ConsultEntity;
 import com.challenge.challenge.domain.orm.models.DoctorEntity;
 import com.challenge.challenge.domain.orm.models.PathologyEntity;
@@ -27,8 +28,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -85,6 +84,12 @@ public class ConsultService implements IHospitalService {
     public List<TopSpecialtyResponse> getTopSpecialties() {
         return consultRepository.findSpecialtiesWithMoreThanConsults(2L)
                 .orElseGet(Collections::emptyList);
+    }
+
+    @Override
+    public List<Patient> getAllPatients(PatientFilters filters) {
+
+        return null;
     }
 
     private void addSymptomsFromPathologies(Long patientId, List<SymptomEntity> patientSymptoms) {
