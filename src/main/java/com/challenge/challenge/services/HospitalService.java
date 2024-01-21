@@ -19,15 +19,18 @@ import com.challenge.challenge.domain.orm.repository.PathologyRepository;
 import com.challenge.challenge.domain.orm.repository.PatientRepository;
 import com.challenge.challenge.domain.orm.repository.SpecialtyRepository;
 import com.challenge.challenge.domain.orm.repository.SymptomRepository;
+import com.challenge.challenge.domain.orm.specification.PatientSpecification;
 import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.domain.response.TopSpecialtyResponse;
 import com.challenge.challenge.mappers.HospitalEntityMapper;
+import com.challenge.challenge.services.interfaces.IHospitalService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +39,7 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @AllArgsConstructor
-public class ConsultService implements IHospitalService {
+public class HospitalService implements IHospitalService {
 
     private final HospitalEntityMapper entityMapper;
     private final ConsultRepository consultRepository;
@@ -45,9 +48,6 @@ public class ConsultService implements IHospitalService {
     private final PatientRepository patientRepository;
     private final PathologyRepository pathologyRepository;
     private final SymptomRepository symptomRepository;
-
-    @PersistenceContext
-    private final EntityManager entityManager;
 
     @Override
     public Consult createConsult(ConsultCommandDto consult) {
@@ -87,9 +87,13 @@ public class ConsultService implements IHospitalService {
     }
 
     @Override
-    public List<Patient> getAllPatients(PatientFilters filters) {
+    public Page<Patient> getAllPatients(PatientFilters filters, Pageable pageable) {
+        Specification<PatientEntity> spec = PatientSpecification.filterBy(filters);
+        Page<PatientEntity> patientEntities = patientRepository.findAll(spec, pageable)
+                .orElseGet(Page::empty);
 
-        return null;
+        Page<Patient> patients = patientEntities.map(entityMapper::toPatient);
+        return patients;
     }
 
     private void addSymptomsFromPathologies(Long patientId, List<SymptomEntity> patientSymptoms) {

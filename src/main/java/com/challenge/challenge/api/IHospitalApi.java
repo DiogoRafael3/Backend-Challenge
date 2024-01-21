@@ -7,6 +7,8 @@ import com.challenge.challenge.domain.response.dto.ResponseDto;
 import com.challenge.challenge.domain.response.dto.TopSpecialtyResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +37,6 @@ public interface IHospitalApi {
 
     @Operation(method = "getAllPatients", summary = "return the data for all the patients with pagination, filtering and sorting by either age or name.")
     @ResponseStatus(HttpStatus.OK)
-    ResponseEntity<List<PatientDto>> getAllPatients(@RequestBody PatientFilters filters);
+    ResponseEntity<Page<PatientDto>> getAllPatients(@RequestBody PatientFilters filters, Pageable pageable);
 
 }

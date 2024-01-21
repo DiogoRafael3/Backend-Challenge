@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PatientCommandDto {
     private String name;
-    private short age;
+    private Integer age;
     private PathologyCommandDto pathology;
 }

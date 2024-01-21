@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class Patient {
     private Long id;
     private String name;
-    private short age;
+    private Integer age;
 }

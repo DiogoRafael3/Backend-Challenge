@@ -1,7 +1,9 @@
 package com.challenge.challenge.mappers;
 
 import com.challenge.challenge.domain.Consult;
+import com.challenge.challenge.domain.Patient;
 import com.challenge.challenge.domain.dto.ConsultDto;
+import com.challenge.challenge.domain.dto.PatientDto;
 import com.challenge.challenge.domain.response.ConsultResponse;
 import com.challenge.challenge.domain.response.Response;
 import com.challenge.challenge.domain.response.TopSpecialtyResponse;
@@ -12,6 +14,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -25,6 +28,8 @@ public interface HospitalDtoMapper {
 
     @Named("consultResponsesDto")
     List<ConsultResponseDto> toConsultResponseDto(List<ConsultResponse> consultResponses);
+
+    PatientDto toPatientDto(Patient patient);
 
 
     List<TopSpecialtyResponseDto> toTopSpecialtiesDto(List<TopSpecialtyResponse> topSpecialtyResponses);

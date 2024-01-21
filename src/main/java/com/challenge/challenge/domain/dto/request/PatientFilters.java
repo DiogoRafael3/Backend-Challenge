@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PatientFilters {
     String nameFilter;
-    Long ageFilter;
-    boolean sortByName;
-    boolean sortByAge;
+    Integer ageFilter;
+    boolean sortByName = false;
+    boolean sortByAge = false;
 }

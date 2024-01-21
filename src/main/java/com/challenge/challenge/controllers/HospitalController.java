@@ -10,9 +10,11 @@ import com.challenge.challenge.domain.response.TopSpecialtyResponse;
 import com.challenge.challenge.domain.response.dto.ResponseDto;
 import com.challenge.challenge.domain.response.dto.TopSpecialtyResponseDto;
 import com.challenge.challenge.mappers.HospitalDtoMapper;
-import com.challenge.challenge.services.IHospitalService;
+import com.challenge.challenge.services.interfaces.IHospitalService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -56,8 +58,8 @@ public class HospitalController implements IHospitalApi {
     }
 
     @GetMapping("/getAllPatients")
-    public ResponseEntity<List<PatientDto>> getAllPatients(PatientFilters filters) {
-        List<Patient> filteredPatients = hospitalService.getAllPatients(filters);
-        return null;
+    public ResponseEntity<Page<PatientDto>> getAllPatients(PatientFilters filters, Pageable pageable) {
+        Page<Patient> filteredPatients = hospitalService.getAllPatients(filters, pageable);
+        return ResponseEntity.ok(filteredPatients.map(hospitalDtoMapper::toPatientDto));
     }
 }

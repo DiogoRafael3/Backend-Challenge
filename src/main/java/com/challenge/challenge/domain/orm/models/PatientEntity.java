@@ -27,5 +27,5 @@ public class PatientEntity {
     @Column
     private String name;
     @Column
-    private short age;
+    private Integer age;
 }

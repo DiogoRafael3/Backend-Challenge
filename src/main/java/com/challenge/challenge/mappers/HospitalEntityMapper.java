@@ -1,10 +1,12 @@
 package com.challenge.challenge.mappers;
 
 import com.challenge.challenge.domain.Consult;
+import com.challenge.challenge.domain.Patient;
 import com.challenge.challenge.domain.Symptom;
 import com.challenge.challenge.domain.dto.request.command.ConsultCommandDto;
 import com.challenge.challenge.domain.orm.models.ConsultEntity;
 import com.challenge.challenge.domain.orm.models.DoctorEntity;
+import com.challenge.challenge.domain.orm.models.PatientEntity;
 import com.challenge.challenge.domain.orm.models.SpecialtyEntity;
 import com.challenge.challenge.domain.orm.models.SymptomEntity;
 import com.challenge.challenge.domain.response.ConsultResponse;
@@ -27,6 +29,8 @@ public interface HospitalEntityMapper {
     List<ConsultResponse> toConsultResponseList(List<ConsultEntity> consultEntityList);
 
     List<Symptom> toSymptomList(List<SymptomEntity> symptomEntityList);
+
+    Patient toPatient(PatientEntity patientEntity);
 
     @Named("stringToDoctor")
     DoctorEntity stringToDoctor(String name);
