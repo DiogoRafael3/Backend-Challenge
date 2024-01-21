@@ -51,22 +51,38 @@ public class HospitalService implements IHospitalService {
 
     @Override
     public Consult createConsult(ConsultCommandDto consult) {
+        log.debug("[HospitalService] Creating consult object...");
         DoctorEntity doctor = doctorRepository.findByName(consult.getDoctor())
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+                .orElseThrow(() -> {
+                    String message = String.format("[HospitalService] Doctor %s not found!", consult.getDoctor());
+                    log.error(message);
+                    return new RuntimeException(message);
+                });
         SpecialtyEntity specialty = specialtyRepository.findBySpecialtyName(consult.getSpecialty())
-                .orElseThrow(() -> new RuntimeException("Specialty not found"));
+                .orElseThrow(() -> {
+                    String message = String.format("[HospitalService] Specialty %s not found!", consult.getSpecialty());
+                    log.error(message);
+                    return new RuntimeException(message);
+                });
 
         PatientEntity patient = createPatient(consult.getPatient());
 
+        log.info("[HospitalService] Saving consult to database...");
         ConsultEntity savedEntity = consultRepository.save(generateConsult(consult, doctor, specialty, patient));
 
+        log.info("[HospitalService] Successfully saved consult to database!");
         return entityMapper.toConsult(savedEntity);
     }
 
     @Override
     public Response getPatientConsultsAndSymptoms(Long patientId) {
+        log.info("[HospitalService] Fetching for consults and symptoms of patient with id {}...", patientId);
         List<ConsultEntity> patientConsults = consultRepository.findAllByPatientId(patientId)
-                .orElseThrow(() -> new RuntimeException("Patient has been to no consults!"));
+                .orElseThrow(() -> {
+                    String message = String.format("[HospitalService] Patient with id %s has been to no consults!", patientId);
+                    log.error(message);
+                    return new RuntimeException(message);
+                });
 
         Response response = new Response();
         response.setConsults(entityMapper.toConsultResponseList(patientConsults));
@@ -76,27 +92,35 @@ public class HospitalService implements IHospitalService {
 
         response.setSymptoms(entityMapper.toSymptomList(patientSymptoms));
 
+        log.info("[HospitalService] Successfully obtained patient data!");
         return response;
     }
 
     @Override
     public List<TopSpecialtyResponse> getTopSpecialties() {
+        log.info("[HospitalService] Getting hospital's top specialties...");
         return consultRepository.findSpecialtiesWithMoreThanConsults(2L)
                 .orElseGet(Collections::emptyList);
     }
 
     @Override
     public Page<Patient> getAllPatients(PatientFilters filters, Pageable pageable) {
+        log.info("[HospitalService] Getting all patients...");
         Specification<PatientEntity> spec = PatientSpecification.filterBy(filters);
         Page<PatientEntity> patientEntities = patientRepository.findAll(spec, pageable)
                 .orElseGet(Page::empty);
 
+        log.info("[HospitalService] Successfully obtained all patients!");
         return patientEntities.map(entityMapper::toPatient);
     }
 
     private void addSymptomsFromPathologies(Long patientId, List<SymptomEntity> patientSymptoms) {
         List<PathologyEntity> patientPathologies = pathologyRepository.findAllByPatientId(patientId)
-                .orElseThrow(() -> new RuntimeException("Patient information may be corrupted"));
+                .orElseThrow(() -> {
+                    String message = "[HospitalService] Patient information may be corrupted, no pathologies found";
+                    log.error(message);
+                    return new RuntimeException(message);
+                });
         patientPathologies.stream()
                 .map(PathologyEntity::getSymptoms)
                 .forEach(patientSymptoms::addAll);
@@ -108,20 +132,17 @@ public class HospitalService implements IHospitalService {
                 .orElseGet(() -> patientRepository.save(new PatientEntity(null, patient.getName(), patient.getAge())));
 
         createPathology(patient.getPathology(), patientEntity);
-
         return patientEntity;
     }
 
     private void createPathology(PathologyCommandDto pathologyCommandDto, PatientEntity entity) {
         PathologyEntity pathology = new PathologyEntity();
-
         List<SymptomEntity> symptoms = pathologyCommandDto.getSymptoms().stream()
                 .map(this::createSymptom)
                 .collect(Collectors.toList());
 
         pathology.setPatient(entity);
         pathology.setSymptoms(symptoms);
-
         pathologyRepository.save(pathology);
     }
 
