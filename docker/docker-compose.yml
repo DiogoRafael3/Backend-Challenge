@@ -1,6 +1,14 @@
 version: '3.9'
 
 services:
+  fluentd:
+    image: fluent/fluentd:v1.16-1
+    ports:
+      - "24224:24224"
+    volumes:
+      - ./fluentd/conf:/fluentd/etc
+      - ./fluentd/log:/fluentd/log
+    command: [ "fluentd", "-c", "/fluentd/etc/fluent.conf" ]
 
   server:
     image: 'challenge-1.0.0.jar'
@@ -13,6 +21,10 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=challenge
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: "fluentd:24224"
 
   db:
     image: postgres:13
