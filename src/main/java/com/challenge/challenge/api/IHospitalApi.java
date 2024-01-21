@@ -1,5 +1,6 @@
 package com.challenge.challenge.api;
 
+import com.challenge.challenge.domain.dto.ConsultDto;
 import com.challenge.challenge.domain.dto.PatientDto;
 import com.challenge.challenge.domain.dto.request.PatientFilters;
 import com.challenge.challenge.domain.dto.request.command.ConsultCommandDto;
@@ -25,7 +26,7 @@ public interface IHospitalApi {
 
     @Operation(method = "createConsult", summary = "Registers new consults that happen in the hospital")
     @ResponseStatus(HttpStatus.CREATED)
-    ResponseEntity<String> createConsult(@RequestBody @NotNull ConsultCommandDto consultCommandDto);
+    ResponseEntity<ConsultDto> createConsult(@RequestBody @NotNull ConsultCommandDto consultCommandDto);
 
     @Operation(method = "getConsultsAndSymptoms", summary = "For a specific patient, return a list of all the consults that the patient has had and also all the symptoms he has presented in each consult.")
     @ResponseStatus(HttpStatus.OK)

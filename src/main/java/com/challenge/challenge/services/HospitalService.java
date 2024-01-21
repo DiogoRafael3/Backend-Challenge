@@ -60,7 +60,6 @@ public class HospitalService implements IHospitalService {
 
         ConsultEntity savedEntity = consultRepository.save(generateConsult(consult, doctor, specialty, patient));
 
-
         return entityMapper.toConsult(savedEntity);
     }
 
@@ -92,8 +91,7 @@ public class HospitalService implements IHospitalService {
         Page<PatientEntity> patientEntities = patientRepository.findAll(spec, pageable)
                 .orElseGet(Page::empty);
 
-        Page<Patient> patients = patientEntities.map(entityMapper::toPatient);
-        return patients;
+        return patientEntities.map(entityMapper::toPatient);
     }
 
     private void addSymptomsFromPathologies(Long patientId, List<SymptomEntity> patientSymptoms) {
