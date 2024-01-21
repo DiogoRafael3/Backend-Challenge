@@ -30,6 +30,5 @@ public interface HospitalDtoMapper {
 
     PatientDto toPatientDto(Patient patient);
 
-
     List<TopSpecialtyResponseDto> toTopSpecialtiesDto(List<TopSpecialtyResponse> topSpecialtyResponses);
 }
