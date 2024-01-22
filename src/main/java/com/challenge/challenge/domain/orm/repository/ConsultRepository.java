@@ -12,12 +12,12 @@ import java.util.Optional;
 
 @Repository("consultJpaRepository")
 public interface ConsultRepository extends JpaRepository<ConsultEntity, Long> {
-    Optional<List<ConsultEntity>> findAllByPatientId(Long patientId);
+    List<ConsultEntity> findAllByPatientId(Long patientId);
 
     @Query("SELECT new com.challenge.challenge.domain.response.TopSpecialtyResponse(s.specialtyName, COUNT(c)) " +
             "FROM ConsultEntity c " +
             "JOIN c.specialty s " +
             "GROUP BY s.specialtyName " +
             "HAVING COUNT(c) > :consultCountThreshold")
-    Optional<List<TopSpecialtyResponse>> findSpecialtiesWithMoreThanConsults(@Param("consultCountThreshold") long consultCountThreshold);
+    List<TopSpecialtyResponse> findSpecialtiesWithMoreThanConsults(@Param("consultCountThreshold") long consultCountThreshold);
 }

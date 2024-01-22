@@ -52,18 +52,8 @@ public class HospitalService implements IHospitalService {
     @Override
     public Consult createConsult(ConsultCommandDto consult) {
         log.debug("[HospitalService] Creating consult object...");
-        DoctorEntity doctor = doctorRepository.findByName(consult.getDoctor())
-                .orElseThrow(() -> {
-                    String message = String.format("[HospitalService] Doctor %s not found!", consult.getDoctor());
-                    log.error(message);
-                    return new RuntimeException(message);
-                });
-        SpecialtyEntity specialty = specialtyRepository.findBySpecialtyName(consult.getSpecialty())
-                .orElseThrow(() -> {
-                    String message = String.format("[HospitalService] Specialty %s not found!", consult.getSpecialty());
-                    log.error(message);
-                    return new RuntimeException(message);
-                });
+        DoctorEntity doctor = validateDoctor(consult);
+        SpecialtyEntity specialty = validateSpecialty(consult);
 
         PatientEntity patient = createPatient(consult.getPatient());
 
@@ -77,13 +67,8 @@ public class HospitalService implements IHospitalService {
     @Override
     public Response getPatientConsultsAndSymptoms(Long patientId) {
         log.info("[HospitalService] Fetching for consults and symptoms of patient with id {}...", patientId);
-        List<ConsultEntity> patientConsults = consultRepository.findAllByPatientId(patientId)
-                .orElseThrow(() -> {
-                    String message = String.format("[HospitalService] Patient with id %s has been to no consults!", patientId);
-                    log.error(message);
-                    return new RuntimeException(message);
-                });
-
+        validatePatientExists(patientId);
+        List<ConsultEntity> patientConsults = consultRepository.findAllByPatientId(patientId);
         Response response = new Response();
         response.setConsults(entityMapper.toConsultResponseList(patientConsults));
 
@@ -99,8 +84,7 @@ public class HospitalService implements IHospitalService {
     @Override
     public List<TopSpecialtyResponse> getTopSpecialties() {
         log.info("[HospitalService] Getting hospital's top specialties...");
-        return consultRepository.findSpecialtiesWithMoreThanConsults(2L)
-                .orElseGet(Collections::emptyList);
+        return consultRepository.findSpecialtiesWithMoreThanConsults(2L);
     }
 
     @Override
@@ -112,6 +96,24 @@ public class HospitalService implements IHospitalService {
 
         log.info("[HospitalService] Successfully obtained all patients!");
         return patientEntities.map(entityMapper::toPatient);
+    }
+
+    private SpecialtyEntity validateSpecialty(ConsultCommandDto consult) {
+        return specialtyRepository.findBySpecialtyName(consult.getSpecialty())
+                .orElseThrow(() -> {
+                    String message = String.format("[HospitalService] Specialty %s not found!", consult.getSpecialty());
+                    log.error(message);
+                    return new RuntimeException(message);
+                });
+    }
+
+    private DoctorEntity validateDoctor(ConsultCommandDto consult) {
+        return doctorRepository.findByName(consult.getDoctor())
+                .orElseThrow(() -> {
+                    String message = String.format("[HospitalService] Doctor %s not found!", consult.getDoctor());
+                    log.error(message);
+                    return new RuntimeException(message);
+                });
     }
 
     private void addSymptomsFromPathologies(Long patientId, List<SymptomEntity> patientSymptoms) {
@@ -158,5 +160,14 @@ public class HospitalService implements IHospitalService {
         consultEntity.setSpecialty(specialty);
         consultEntity.setPatient(patient);
         return consultEntity;
+    }
+
+    private void validatePatientExists(Long patientId) {
+        patientRepository.findById(patientId)
+                .orElseThrow(() -> {
+                    String message = String.format("[HospitalService] Patient with id %d not found!", patientId);
+                    log.error(message);
+                    return new RuntimeException(message);
+                });
     }
 }
