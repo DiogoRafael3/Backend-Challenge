@@ -32,7 +32,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -117,12 +116,7 @@ public class HospitalService implements IHospitalService {
     }
 
     private void addSymptomsFromPathologies(Long patientId, List<SymptomEntity> patientSymptoms) {
-        List<PathologyEntity> patientPathologies = pathologyRepository.findAllByPatientId(patientId)
-                .orElseThrow(() -> {
-                    String message = "[HospitalService] Patient information may be corrupted, no pathologies found";
-                    log.error(message);
-                    return new RuntimeException(message);
-                });
+        List<PathologyEntity> patientPathologies = pathologyRepository.findAllByPatientId(patientId);
         patientPathologies.stream()
                 .map(PathologyEntity::getSymptoms)
                 .forEach(patientSymptoms::addAll);
