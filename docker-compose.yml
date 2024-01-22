@@ -1,8 +1,10 @@
 version: '3.9'
 
 services:
-
   server:
+    build:
+      context: .
+      dockerfile: Dockerfile
     image: 'challenge-1.0.0.jar'
     ports:
       - "8080:8080"
@@ -13,10 +15,6 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=challenge
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-    logging:
-      driver: "fluentd"
-      options:
-        fluentd-address: "fluentd:24224"
 
   db:
     image: postgres:13
@@ -26,3 +24,5 @@ services:
       - POSTGRES_PASSWORD=challenge
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
+    volumes:
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
