@@ -17,8 +17,7 @@ import javax.persistence.UniqueConstraint;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(
-        name = "PATIENT",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"name", "age"})
+        name = "PATIENT"
 )
 public class PatientEntity {
     @Id

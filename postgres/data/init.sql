@@ -85,10 +85,15 @@ INSERT INTO SYMPTOM (description) VALUES
 ('Symptom 15 Description');
 
 -- Create PATHOLOGY_SYMPTOMS table
-CREATE TABLE PATHOLOGY_SYMPTOMS (
-    pathology_entity_id INTEGER REFERENCES PATHOLOGY(id),
-    symptoms_id INTEGER REFERENCES SYMPTOM(id),
-    PRIMARY KEY (pathology_entity_id, symptoms_id)
+CREATE TABLE IF NOT EXISTS pathology_symptoms
+(
+    pathology_entity_id bigint NOT NULL,
+    symptoms_id bigint NOT NULL,
+    CONSTRAINT uk_symptoms UNIQUE (symptoms_id),
+    CONSTRAINT fk_symptoms FOREIGN KEY (symptoms_id)
+        REFERENCES symptom (id)
+    CONSTRAINT fk_pathology FOREIGN KEY (pathology_entity_id)
+        REFERENCES pathology (id)
 );
 
 -- Complete pathology relations
@@ -124,4 +129,4 @@ INSERT INTO CONSULT (doctor_id, patient_id, specialty_id) VALUES
 (3, 3, 3),
 (4,4,4),
 (5,5,5),
-(2,6,2)
+(2,6,2);
