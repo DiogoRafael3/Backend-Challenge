@@ -85,7 +85,7 @@ INSERT INTO SYMPTOM (description) VALUES
 ('Symptom 15 Description');
 
 -- Create PATHOLOGY_SYMPTOMS table
-CREATE TABLE IF NOT EXISTS pathology_symptoms
+CREATE TABLE IF NOT EXISTS pathology_symptoms -- Taken from database created by the application
 (
     pathology_entity_id bigint NOT NULL,
     symptoms_id bigint NOT NULL,
