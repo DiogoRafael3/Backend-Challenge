@@ -27,7 +27,36 @@ Run the following commands in the command line:
       - ./postgres/data/init.sql:/docker-entrypoint-initdb.d/init.sql
 ```
 
-# Documentation
+## Endpoints
+
+### OpenApi
+
+OpenApi specification is available at:
+
+http://localhost:8080/challenge/swagger-ui/index.html
+
+All curl descriptions are provided in this UI.
+
+### /createConsult
+
+Allows creation of a consult, provided the doctor and specialty exist, else there will be a runtime error and this service will output 500.
+
+### /consultsAndSymptoms
+
+Gets the patients symptoms and consults.
+
+It was unclear in the instructions whether to search for a patient via id or name/age so it was defaulted to id.
+
+### /topSpecialties
+
+Gets top specialties, where top specialties are specialties whose consult has been requested more than twice.
+
+### /getAllPatients
+
+Gets all patients, filtered by name or age, and sorted by name and/or age, according to the request.
+
+
+# Remarks
 
 This is a brief description of challenge components and my decisions throughout the process
 
@@ -67,34 +96,6 @@ In this repo, it was attempted that code would be at its cleanest and shortest, 
 * **HospitalService** would be further segregated into many services depending on the entity used in the endpoint (as to not inject so many dependencies into the same service)
 * Preferably there would be an **exception handler** in order to output more clarifying errors for the user
 
-## Endpoints
-
-### OpenApi
-
-OpenApi specification is available at:
-
-http://localhost:8080/challenge/swagger-ui/index.html
-
-All curl descriptions are provided in this UI.
-
-### /createConsult
-
-Allows creation of a consult, provided the doctor and specialty exist, else there will be a runtime error and this service will output 500.
-
-### /consultsAndSymptoms
-
-Gets the patients symptoms and consults.
-
-It was unclear in the instructions whether to search for a patient via id or name/age so it was defaulted to id.
-
-### /topSpecialties
-
-Gets top specialties, where top specialties are specialties whose consult has been requested more than twice.
-
-### /getAllPatients
-
-Gets all patients, filtered by name or age, and sorted by name and/or age, according to the request.
-
 ## docker-compose
 
 I chose to change the image into a dockerhub repo, due to this being the most out-of-the-box option i could think of.
@@ -103,7 +104,7 @@ Additionally, i tried to use a grafana/loki/promtail stack to capture logging, h
 
 In this instance, Promtail "attaches" itself to the container, sending out its logs, Loki stores the logs in a database (i used Loki because it was suggested by an SRE friend), and then Grafana queries for these logs.
 
-I bridged these containers via 
+I bridged these containers via
 ```yaml
 networks:
 stack:
