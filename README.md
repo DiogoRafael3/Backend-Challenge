@@ -115,3 +115,5 @@ driver: bridge
 This challenge was extremely fun and helped me evolve, i had never used pagination or log capturing before and it was a fun challenge to sort those things out in real time.
 
 As said before, there was some things i'd have liked to integrate that i didn't get the time to (including diagrams for this readme), however i still believe this is a good implementation of the problem.
+
+Also i only noticed i used my work account to perform commits halfway through.
