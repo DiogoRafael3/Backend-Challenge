@@ -17,12 +17,14 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=challenge
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    volumes:
+      - ./logs/var/log
 
   grafana:
-    image: grafana/grafana:10
+    image: grafana/grafana:10.0.10
     container_name: grafana
     volumes:
-      - ./grafana:/var/lib/grafana
+      - ./configs/grafana/datasource.yml:/etc/grafana/provisioning/datasource.yml
     environment:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
@@ -38,16 +40,16 @@ services:
     network_mode: host
     volumes:
       - ./loki/data:/loki
-      - ./loki/loki.yml:/etc/loki/local-config.yaml
+      - ./loki/loki.yml:/etc/loki/local-config.yml
     ports:
       - "3100:3100"
   promtail:
-    image: grafana/promtail:2.8
+    image: grafana/promtail:2.8.0
     container_name: promtail
     command: -config.file=/etc/promtail/promtail.yml
     volumes:
       - ./configs/promtail:/etc/promtail/
-      - ./loki/:/var/log/
+      - ./logs/:/var/log/
     ports:
       - "9080:9080"
     networks:

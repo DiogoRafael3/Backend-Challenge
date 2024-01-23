@@ -18,7 +18,7 @@ scrape_configs:
           job: challenge-logs
           host: local
           agent: promtail
-          __path__: /var/log/challenge-logs.txt
+          __path__: /var/log/logfile.log
     pipeline_stages:
       - json:
           expressions:
