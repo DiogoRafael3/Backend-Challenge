@@ -5,7 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: 'challenge-1.0.0.jar'
+    image: 'meowtobot/challenge'
+    networks:
+      - stack
     ports:
       - "8080:8080"
     depends_on:
@@ -18,6 +20,8 @@ services:
 
   db:
     image: postgres:13
+    networks:
+      - stack
     ports:
       - "5432:5432"
     environment:
@@ -25,4 +29,9 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
     volumes:
-      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgres/data/init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+networks:
+  stack:
+    driver: bridge
