@@ -92,7 +92,7 @@ CREATE TABLE PATHOLOGY_SYMPTOMS (
 );
 
 -- Complete pathology relations
-INSERT INTO PATHOLOGY_SYMPTOMS ('pathology_entity_id', 'symptoms_id') VALUES
+INSERT INTO PATHOLOGY_SYMPTOMS (pathology_entity_id, symptoms_id) VALUES
 (1,1),
 (1,2),
 (2,3),
@@ -108,3 +108,20 @@ INSERT INTO PATHOLOGY_SYMPTOMS ('pathology_entity_id', 'symptoms_id') VALUES
 (6,13),
 (7,14),
 (7,15);
+
+CREATE TABLE CONSULT (
+    id SERIAL PRIMARY KEY,
+    doctor_id BIGINT REFERENCES DOCTOR(id),
+    patient_id BIGINT REFERENCES PATIENT(id),
+    specialty_id BIGINT REFERENCES SPECIALTY(id)
+);
+
+INSERT INTO CONSULT (doctor_id, patient_id, specialty_id) VALUES
+(1, 1, 1),
+(1, 1, 1),
+(2, 1, 2),
+(2, 2, 2),
+(3, 3, 3),
+(4,4,4),
+(5,5,5),
+(2,6,2)
