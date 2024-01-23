@@ -17,6 +17,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=challenge
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
   grafana:
     image: grafana/grafana:10
     container_name: grafana
